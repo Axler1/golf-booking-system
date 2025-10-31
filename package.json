@@ -1,0 +1,21 @@
+{
+  "name": "golf-booking-system",
+  "version": "1.0.0",
+  "description": "Booking system for a golf simulator.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axler1/golf-booking-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Axler1/golf-booking-system/issues"
+  },
+  "homepage": "https://github.com/Axler1/golf-booking-system#readme"
+}
