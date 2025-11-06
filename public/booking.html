@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Session | Golf Simulator Pro</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <h1>⛳ Golf Simulator Pro</h1>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="booking.html" class="active">Book Now</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Booking Section -->
+  <section class="booking-section">
+    <div class="container">
+      <h2 class="section-title">Book Your Time Slot</h2>
+      
+      <!-- Date Selection -->
+      <div class="booking-step">
+        <h3>Step 1: Select Date</h3>
+        <div class="date-selector">
+          <label for="booking-date">Choose a date:</label>
+          <input type="date" id="booking-date" class="input-field" required>
+          <button id="check-availability-btn" class="btn btn-primary">Check Availability</button>
+        </div>
+      </div>
+
+      <!-- Available Slots (initially hidden) -->
+      <div class="booking-step" id="slots-section" style="display: none;">
+        <h3>Step 2: Select Time Slot</h3>
+        <div id="loading" class="loading" style="display: none;">
+          <p>Loading available slots...</p>
+        </div>
+        <div id="no-slots" class="message-box" style="display: none;">
+          <p>No available slots for this date. Please try another date.</p>
+        </div>
+        <div id="slots-grid" class="slots-grid">
+          <!-- Time slots will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <!-- Booking Form (initially hidden) -->
+      <div class="booking-step" id="booking-form-section" style="display: none;">
+        <h3>Step 3: Your Information</h3>
+        <form id="booking-form" class="booking-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customer-name">Full Name *</label>
+              <input type="text" id="customer-name" name="customer_name" class="input-field" required>
+            </div>
+            <div class="form-group">
+              <label for="customer-email">Email *</label>
+              <input type="email" id="customer-email" name="customer_email" class="input-field" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customer-phone">Phone *</label>
+              <input type="tel" id="customer-phone" name="customer_phone" class="input-field" required>
+            </div>
+            <div class="form-group">
+              <label for="number-of-players">Number of Players *</label>
+              <select id="number-of-players" name="number_of_players" class="input-field" required>
+                <option value="">Select...</option>
+                <option value="1">1 Player</option>
+                <option value="2">2 Players</option>
+                <option value="3">3 Players</option>
+                <option value="4">4 Players</option>
+                <option value="5">5 Players</option>
+                <option value="6">6 Players</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration *</label>
+            <select id="duration" name="duration" class="input-field" required>
+              <option value="">Select duration...</option>
+              <option value="1">1 Hour ($50)</option>
+              <option value="2">2 Hours ($100)</option>
+              <option value="3">3 Hours ($150)</option>
+            </select>
+          </div>
+
+          <!-- Booking Summary -->
+          <div class="booking-summary" id="booking-summary" style="display: none;">
+            <h4>Booking Summary</h4>
+            <p><strong>Date:</strong> <span id="summary-date"></span></p>
+            <p><strong>Time:</strong> <span id="summary-time"></span></p>
+            <p><strong>Duration:</strong> <span id="summary-duration"></span></p>
+            <p><strong>Total Price:</strong> <span id="summary-price"></span></p>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large">Confirm Booking</button>
+        </form>
+      </div>
+
+      <!-- Success Message (initially hidden) -->
+      <div id="success-message" class="message-box success" style="display: none;">
+        <h3>✓ Booking Confirmed!</h3>
+        <p>Your booking has been confirmed. We'll see you soon!</p>
+        <button onclick="location.reload()" class="btn btn-secondary">Make Another Booking</button>
+      </div>
+
+      <!-- Error Message (initially hidden) -->
+      <div id="error-message" class="message-box error" style="display: none;">
+        <h3>⚠ Booking Failed</h3>
+        <p id="error-text">Something went wrong. Please try again.</p>
+        <button onclick="location.reload()" class="btn btn-secondary">Try Again</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Golf Simulator Pro. Built by [Your Name]</p>
+    </div>
+  </footer>
+
+  <script src="js/booking.js"></script>
+</body>
+</html>
