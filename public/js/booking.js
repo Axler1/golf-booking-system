@@ -54,3 +54,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// API base URL
+const API_URL = 'http://localhost:3000/api';
+
+// Get today's date in YYYY-MM-DD format
+function getTodayDate() {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+}
+
+// Get date 7 days from now
+function getMaxDate() {
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 7);
+  return maxDate.toISOString().split('T')[0];
+}
+
+// Initialize date picker
+document.addEventListener('DOMContentLoaded', () => {
+  const dateInput = document.getElementById('booking-date');
+  dateInput.min = getTodayDate();
+  dateInput.max = getMaxDate();
+  dateInput.value = getTodayDate();
+});
