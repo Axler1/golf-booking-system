@@ -8,6 +8,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Serve static files
+app.use(express.static('public'));
+
 // Middleware
 app.use(cors());
 app.use(express.json());
