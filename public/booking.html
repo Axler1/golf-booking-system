@@ -7,16 +7,31 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Navigation -->
+ <!-- Navigation -->
   <nav class="navbar">
-    <div class="container">
+    <div class="container nav-container">
       <div class="nav-brand">
         <h1>⛳ Golf Simulator Pro</h1>
       </div>
-      <ul class="nav-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="booking.html" class="active">Book Now</a></li>
-        <li><a href="admin.html">Admin</a></li>
+
+      <!-- Hamburger / Toggle button (visible on small screens) -->
+      <button
+        class="nav-toggle"
+        aria-controls="nav-menu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <ul id="nav-menu" class="nav-menu" role="menubar">
+        <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+        <li role="none"><a role="menuitem" href="booking.html" class="active">Book Now</a></li>
+        <li role="none"><a role="menuitem" href="admin.html">Admin</a></li>
       </ul>
     </div>
   </nav>

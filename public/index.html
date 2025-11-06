@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Book your golf simulator time - Premium indoor golf experience">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book your golf simulator time - Premium indoor golf experience" />
   <title>Golf Simulator Booking | Premium Indoor Golf</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
   <!-- Navigation -->
   <nav class="navbar">
-    <div class="container">
-      <div class="nav-brand">
+    <div class="container nav-container">
+      <div class="nav-brand" aria-hidden="false">
         <h1>⛳ Golf Simulator Pro</h1>
       </div>
-      <ul class="nav-menu">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="booking.html">Book Now</a></li>
-        <li><a href="admin.html">Admin</a></li>
+
+      <!-- Hamburger / Toggle button (visible on small screens) -->
+      <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <ul id="nav-menu" class="nav-menu" role="menubar">
+        <li role="none"><a role="menuitem" href="index.html" class="active">Home</a></li>
+        <li role="none"><a role="menuitem" href="booking.html">Book Now</a></li>
+        <li role="none"><a role="menuitem" href="admin.html">Admin</a></li>
       </ul>
     </div>
   </nav>
@@ -98,10 +110,10 @@
   <footer class="footer">
     <div class="container">
       <p>&copy; 2025 Golf Simulator Pro. Built by Axler1</p>
-      <p>Portfolio Project - Full Stack JavaScript Developer</p>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
 </body>
+
 </html>
