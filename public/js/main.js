@@ -1,5 +1,5 @@
 // Mobile navigation toggle
-document.addEventListener('DOMContentLoaded', function() {
+function mobileNavigationToggle() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
@@ -46,12 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Optional: close if user clicks outside the nav on mobile
+    // Close if user clicks outside the nav on mobile
     document.addEventListener('click', function(e) {
         if (window.innerWidth <= 768) {
             const clickedInside = navMenu.contains(e.target) || navToggle.contains(e.target);
             if (!clickedInside) setExpanded(false);
         }
     });
-});
+};
 
+document.addEventListener('DOMContentLoaded', mobileNavigationToggle);
