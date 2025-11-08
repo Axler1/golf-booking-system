@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Golf Simulator Pro</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <div class="nav-brand">
+        <h1>⛳ Golf Simulator Pro</h1>
+      </div>
+
+      <!-- Hamburger / Toggle button (visible on small screens) -->
+      <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <ul id="nav-menu" class="nav-menu" role="menubar">
+        <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+        <li role="none"><a role="menuitem" href="booking.html" class="active">Book Now</a></li>
+        <li role="none"><a role="menuitem" href="admin.html">Admin</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Admin Login (initially visible) -->
+  <section class="admin-login" id="admin-login">
+    <div class="container">
+      <div class="login-box">
+        <h2>🔐 Admin Login</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input type="password" id="admin-password" class="input-field" placeholder="Enter admin password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-large">Login</button>
+          <p class="login-hint">Hint: Password is "admin123"</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Dashboard (initially hidden) -->
+  <section class="admin-dashboard" id="admin-dashboard" style="display: none;">
+    <div class="container-fluid">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h2>Admin Dashboard</h2>
+        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <h3 id="total-bookings">0</h3>
+            <p>Total Bookings</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h3 id="pending-bookings">0</h3>
+            <p>Pending</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <h3 id="total-revenue">$0</h3>
+            <p>Total Revenue</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <h3 id="today-bookings">0</h3>
+            <p>Today's Bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Actions -->
+      <div class="dashboard-controls">
+        <div class="filters">
+          <input type="date" id="filter-date" class="input-field" placeholder="Filter by date">
+          <select id="filter-status" class="input-field">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button id="clear-filters-btn" class="btn btn-secondary">Clear Filters</button>
+        </div>
+        <div class="actions">
+          <button id="refresh-btn" class="btn btn-secondary">🔄 Refresh</button>
+          <button id="export-csv-btn" class="btn btn-primary">📥 Export CSV</button>
+        </div>
+      </div>
+
+      <!-- Bookings Table -->
+      <div class="table-container">
+        <div id="loading-bookings" class="loading" style="display: none;">
+          <p>Loading bookings...</p>
+        </div>
+        <div id="no-bookings" class="message-box" style="display: none;">
+          <p>No bookings found.</p>
+        </div>
+        <table class="bookings-table" id="bookings-table" style="display: none;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Duration</th>
+              <th>Players</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookings-tbody">
+            <!-- Bookings will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confirmation Modal -->
+  <div id="confirm-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Confirm Action</h3>
+      <p id="confirm-message">Are you sure?</p>
+      <div class="modal-actions">
+        <button id="confirm-yes" class="btn btn-primary">Yes</button>
+        <button id="confirm-no" class="btn btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Golf Simulator Pro. Built by Axler1</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+
+</html>
