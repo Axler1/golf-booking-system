@@ -172,3 +172,76 @@ function updateStats() {
     document.getElementById('total-revenue').textContent = `$${totalRevenue}`;
     document.getElementById('today-bookings').textContent = todayBookings;
 }
+
+// Update booking status
+async function updateBookingStatus(id, status) {
+    try {
+        // For this version, we'll use the cancel endpoint and update status manually
+        // Otherwise, you'd have a PATCH /bookings/:id endpoint
+
+        if (status === 'completed') {
+            // Just update UI for now (in production, call an API endpoint)
+            const booking = allBookings.find(b => b.id === id);
+            if (booking) {
+                booking.status = 'completed';
+                displayBookings(allBookings);
+                updateStats();
+                alert('Booking marked as completed!');
+            }
+        }
+    } catch (error) {
+        alert('Error updating booking status');
+        console.error('Error:', error);
+    }
+}
+
+// Confirm cancellation modal
+let bookingToCancel = null;
+
+function confirmCancel(id) {
+    bookingToCancel = id;
+    const modal = document.getElementById('confirm-modal');
+    document.getElementById('confirm-message').textContent =
+        `Are you sure you want to cancel booking #${id}? This action cannot be undone.`;
+    modal.style.display = 'flex';
+}
+
+// Modal handlers
+document.getElementById('confirm-yes').addEventListener('click', async () => {
+    if (bookingToCancel) {
+        await cancelBooking(bookingToCancel);
+        bookingToCancel = null;
+    }
+    document.getElementById('confirm-modal').style.display = 'none';
+});
+
+document.getElementById('confirm-no').addEventListener('click', () => {
+    bookingToCancel = null;
+    document.getElementById('confirm-modal').style.display = 'none';
+});
+
+// Cancel booking
+async function cancelBooking(id) {
+    try {
+        const response = await fetch(`${API_URL}/bookings/${id}`, {
+            method: 'DELETE'
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Booking cancelled successfully');
+            loadBookings(); // Reload all bookings
+        } else {
+            alert('Error cancelling booking: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error cancelling booking. Please try again.');
+        console.error('Error:', error);
+    }
+}
+
+// Refresh button
+document.getElementById('refresh-btn').addEventListener('click', () => {
+    loadBookings();
+});
