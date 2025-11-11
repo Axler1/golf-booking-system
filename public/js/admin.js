@@ -245,3 +245,32 @@ async function cancelBooking(id) {
 document.getElementById('refresh-btn').addEventListener('click', () => {
     loadBookings();
 });
+
+// Filter bookings
+function filterBookings() {
+    const filterDate = document.getElementById('filter-date').value;
+    const filterStatus = document.getElementById('filter-status').value;
+
+    let filtered = [...allBookings];
+
+    if (filterDate) {
+        filtered = filtered.filter(b => b.booking_date === filterDate);
+    }
+
+    if (filterStatus) {
+        filtered = filtered.filter(b => b.status === filterStatus);
+    }
+
+    displayBookings(filtered);
+}
+
+// Filter event listeners
+document.getElementById('filter-date').addEventListener('change', filterBookings);
+document.getElementById('filter-status').addEventListener('change', filterBookings);
+
+// Clear filters
+document.getElementById('clear-filters-btn').addEventListener('click', () => {
+    document.getElementById('filter-date').value = '';
+    document.getElementById('filter-status').value = '';
+    displayBookings(allBookings);
+});
