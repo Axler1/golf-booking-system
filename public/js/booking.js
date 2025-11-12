@@ -1,3 +1,9 @@
+import {
+    showSlotsSkeleton,
+    smoothScrollTo,
+    showToast
+} from './utils.js';
+
 // API base URL
 const API_URL = 'http://localhost:3000/api';
 
@@ -44,28 +50,31 @@ async function fetchAvailableSlots(date) {
     const noSlots = document.getElementById('no-slots');
     const slotsGrid = document.getElementById('slots-grid');
 
-    // Show loading, hide previous content
-    loading.style.display = 'block';
-    noSlots.style.display = 'none';
-    slotsGrid.innerHTML = '';
+    // Show section and skeleton
     slotsSection.style.display = 'block';
+    loading.style.display = 'none'; // Hide text loading
+    noSlots.style.display = 'none';
+    showSlotsSkeleton(); // Show skeleton instead
 
     try {
         const response = await fetch(`${API_URL}/bookings/available?date=${date}`);
         const result = await response.json();
 
-        loading.style.display = 'none';
-
         if (!result.success || result.data.length === 0) {
+            slotsGrid.innerHTML = '';
             noSlots.style.display = 'block';
             return;
         }
 
+        // Small delay to show the skeleton (better UX)
+        await new Promise(resolve => setTimeout(resolve, 300));
+
         // Display available slots
         displaySlots(result.data, date);
+        showToast('Available slots loaded!', 'success');
     } catch (error) {
-        loading.style.display = 'none';
-        alert('Error fetching availability. Please try again.');
+        slotsGrid.innerHTML = '';
+        showToast('Error loading slots. Please try again.', 'error');
         console.error('Error:', error);
     }
 }
@@ -179,8 +188,9 @@ document.getElementById('booking-form').addEventListener('submit', async (e) => 
 // Submit booking to API
 async function submitBooking(formData) {
     const submitButton = document.querySelector('#booking-form button[type="submit"]');
+    const originalText = submitButton.textContent;
     submitButton.disabled = true;
-    submitButton.textContent = 'Processing...';
+    submitButton.innerHTML = '<span>Processing...</span> ⏳';
 
     try {
         const response = await fetch(`${API_URL}/bookings`, {
@@ -194,27 +204,26 @@ async function submitBooking(formData) {
         const result = await response.json();
 
         if (result.success) {
-            // Show success message
+            // Show success with animation
+            showToast('Booking confirmed! 🎉', 'success');
             document.getElementById('booking-form-section').style.display = 'none';
             document.getElementById('slots-section').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
 
-            // Scroll to success message
-            document.getElementById('success-message').scrollIntoView({
-                behavior: 'smooth'
-            });
+            smoothScrollTo('success-message');
         } else {
-            // Show error message
+            showToast(result.error || 'Booking failed', 'error');
             document.getElementById('error-text').textContent = result.error || 'Booking failed. Please try again.';
             document.getElementById('error-message').style.display = 'block';
             submitButton.disabled = false;
-            submitButton.textContent = 'Confirm Booking';
+            submitButton.textContent = originalText;
         }
     } catch (error) {
         console.error('Error:', error);
+        showToast('Network error. Please check your connection.', 'error');
         document.getElementById('error-text').textContent = 'Network error. Please check your connection and try again.';
         document.getElementById('error-message').style.display = 'block';
         submitButton.disabled = false;
-        submitButton.textContent = 'Confirm Booking';
+        submitButton.textContent = originalText;
     }
 }
