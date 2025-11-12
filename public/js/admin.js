@@ -176,18 +176,23 @@ function updateStats() {
 // Update booking status
 async function updateBookingStatus(id, status) {
     try {
-        // For this version, we'll use the cancel endpoint and update status manually
-        // Otherwise, you'd have a PATCH /bookings/:id endpoint
+        const response = await fetch(`${API_URL}/bookings/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status
+            })
+        });
 
-        if (status === 'completed') {
-            // Just update UI for now (in production, call an API endpoint)
-            const booking = allBookings.find(b => b.id === id);
-            if (booking) {
-                booking.status = 'completed';
-                displayBookings(allBookings);
-                updateStats();
-                alert('Booking marked as completed!');
-            }
+        const result = await response.json();
+
+        if (result.success) {
+            alert(`Booking marked as ${status}!`);
+            loadBookings(); // Reload bookings
+        } else {
+            alert('Error updating booking: ' + result.error);
         }
     } catch (error) {
         alert('Error updating booking status');
@@ -277,64 +282,66 @@ document.getElementById('clear-filters-btn').addEventListener('click', () => {
 
 // Export to CSV
 document.getElementById('export-csv-btn').addEventListener('click', () => {
-  exportToCSV();
+    exportToCSV();
 });
 
 function exportToCSV() {
-  if (allBookings.length === 0) {
-    alert('No bookings to export');
-    return;
-  }
-  
-  // CSV headers
-  const headers = [
-    'ID',
-    'Date',
-    'Time',
-    'Customer Name',
-    'Email',
-    'Phone',
-    'Duration (hrs)',
-    'Players',
-    'Total Price',
-    'Status',
-    'Created At'
-  ];
-  
-  // CSV rows
-  const rows = allBookings.map(booking => [
-    booking.id,
-    booking.booking_date,
-    booking.booking_time,
-    booking.customer_name,
-    booking.customer_email,
-    booking.customer_phone,
-    booking.duration,
-    booking.number_of_players,
-    booking.total_price,
-    booking.status,
-    booking.created_at
-  ]);
-  
-  // Combine headers and rows
-  const csvContent = [
-    headers.join(','),
-    ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-  ].join('\n');
-  
-  // Create blob and download
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  const url = URL.createObjectURL(blob);
-  
-  const filename = `bookings_${new Date().toISOString().split('T')[0]}.csv`;
-  
-  link.setAttribute('href', url);
-  link.setAttribute('download', filename);
-  link.style.visibility = 'hidden';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  
-  alert(`Bookings exported successfully as ${filename}`);
+    if (allBookings.length === 0) {
+        alert('No bookings to export');
+        return;
+    }
+
+    // CSV headers
+    const headers = [
+        'ID',
+        'Date',
+        'Time',
+        'Customer Name',
+        'Email',
+        'Phone',
+        'Duration (hrs)',
+        'Players',
+        'Total Price',
+        'Status',
+        'Created At'
+    ];
+
+    // CSV rows
+    const rows = allBookings.map(booking => [
+        booking.id,
+        booking.booking_date,
+        booking.booking_time,
+        booking.customer_name,
+        booking.customer_email,
+        booking.customer_phone,
+        booking.duration,
+        booking.number_of_players,
+        booking.total_price,
+        booking.status,
+        booking.created_at
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], {
+        type: 'text/csv;charset=utf-8;'
+    });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    const filename = `bookings_${new Date().toISOString().split('T')[0]}.csv`;
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    alert(`Bookings exported successfully as ${filename}`);
 }

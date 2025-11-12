@@ -1,5 +1,11 @@
 import express from 'express';
-import { getAllBookings, getAvailableSlots, createBooking, cancelBooking } from '../controllers/bookingController.js';
+import {
+    getAllBookings,
+    getAvailableSlots,
+    createBooking,
+    cancelBooking,
+    updateBookingStatus
+} from '../controllers/bookingController.js';
 
 const router = express.Router();
 
@@ -14,5 +20,8 @@ router.post('/', createBooking);
 
 // DELETE /api/bookings/:id - Cancel booking
 router.delete('/:id', cancelBooking);
+
+// PATCH /api/bookings/:id - Update booking status
+router.patch('/:id', updateBookingStatus);
 
 export default router;

@@ -96,3 +96,31 @@ export const cancelBooking = (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+// Update booking status
+export const updateBookingStatus = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    // Validate status
+    const validStatuses = ['pending', 'completed', 'cancelled'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ success: false, error: 'Invalid status' });
+    }
+    
+    // Check if booking exists
+    const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(id);
+    
+    if (!booking) {
+      return res.status(404).json({ success: false, error: 'Booking not found' });
+    }
+    
+    // Update status
+    db.prepare('UPDATE bookings SET status = ? WHERE id = ?').run(status, id);
+    
+    res.json({ success: true, message: 'Booking status updated successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
