@@ -345,3 +345,46 @@ function exportToCSV() {
 
     alert(`Bookings exported successfully as ${filename}`);
 }
+
+// Add click handlers to table headers
+document.querySelectorAll('.bookings-table th').forEach((header, index) => {
+    if (index < 10) { // Don't make "Actions" column sortable
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', () => sortTable(index));
+    }
+});
+
+let sortDirection = 1; // 1 for ascending, -1 for descending
+let lastSortedColumn = -1;
+
+function sortTable(columnIndex) {
+    const tbody = document.getElementById('bookings-tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    // Toggle direction if same column clicked
+    if (columnIndex === lastSortedColumn) {
+        sortDirection *= -1;
+    } else {
+        sortDirection = 1;
+    }
+    lastSortedColumn = columnIndex;
+
+    rows.sort((a, b) => {
+        const aValue = a.children[columnIndex].textContent.trim();
+        const bValue = b.children[columnIndex].textContent.trim();
+
+        // Try to parse as number
+        const aNum = parseFloat(aValue.replace(/[^0-9.-]/g, ''));
+        const bNum = parseFloat(bValue.replace(/[^0-9.-]/g, ''));
+
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+            return (aNum - bNum) * sortDirection;
+        }
+
+        // String comparison
+        return aValue.localeCompare(bValue) * sortDirection;
+    });
+
+    // Re-append rows in sorted order
+    rows.forEach(row => tbody.appendChild(row));
+}
