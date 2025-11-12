@@ -546,3 +546,176 @@ section {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
+
+/* ========================================
+   ANIMATIONS & TRANSITIONS
+   ======================================== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scale in */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Apply animations to elements */
+.service-card,
+.feature-item {
+    animation: fadeIn 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.service-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.service-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.service-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.hero-content h2 {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.hero-content p {
+    animation: slideInLeft 0.8s ease-out 0.2s;
+    animation-fill-mode: both;
+}
+
+.hero-content .btn {
+    animation: slideInLeft 0.8s ease-out 0.4s;
+    animation-fill-mode: both;
+}
+
+/* Booking steps animation */
+.booking-step {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Slot button hover pulse */
+.slot-button:hover:not(.unavailable) {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Success message animation */
+.message-box.success {
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* Loading skeleton */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin-bottom: 12px;
+}
+
+.skeleton-card {
+    height: 200px;
+    border-radius: 10px;
+}
+
+/* Form input focus animation */
+.input-field:focus {
+    box-shadow: 0 0 0 3px rgba(124, 179, 66, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Button click animation */
+.btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Page transition */
+body {
+    animation: fadeIn 0.3s ease-out;
+}
