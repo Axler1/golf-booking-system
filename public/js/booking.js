@@ -3,6 +3,25 @@ import {
     smoothScrollTo,
     showToast
 } from './utils.js';
+import {
+    validateEmail,
+    validatePhone,
+    validateName,
+    addValidation
+} from './validation.js';
+
+// Add validation when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('booking-date');
+    dateInput.min = getTodayDate();
+    dateInput.max = getMaxDate();
+    dateInput.value = getTodayDate();
+
+    // Add real-time validation
+    addValidation('customer-name', validateName, 'Name must be at least 2 characters');
+    addValidation('customer-email', validateEmail, 'Please enter a valid email address');
+    addValidation('customer-phone', validatePhone, 'Please enter a valid phone number (min 10 digits)');
+});
 
 // API base URL
 const API_URL = 'http://localhost:3000/api';

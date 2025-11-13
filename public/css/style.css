@@ -719,3 +719,47 @@ html {
 body {
     animation: fadeIn 0.3s ease-out;
 }
+
+/* ========================================
+   FORM VALIDATION STYLES
+   ======================================== */
+
+/* Input validation states */
+.input-field.valid {
+    border-color: var(--success-color);
+    background-color: #f1f8f4;
+}
+
+.input-field.invalid {
+    border-color: var(--error-color);
+    background-color: #fff5f5;
+}
+
+/* Error message */
+.field-error {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: none;
+    animation: slideInLeft 0.3s ease-out;
+}
+
+.field-error.show {
+    display: block;
+}
+
+/* Success checkmark */
+.input-field.valid::after {
+    content: '✓';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+/* Make form-group relative for positioning */
+.form-group {
+    position: relative;
+}
