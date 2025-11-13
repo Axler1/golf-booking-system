@@ -1,4 +1,5 @@
 import {
+    fetchWithRetry,
     showSlotsSkeleton,
     smoothScrollTo,
     showToast
@@ -76,7 +77,7 @@ async function fetchAvailableSlots(date) {
     showSlotsSkeleton(); // Show skeleton instead
 
     try {
-        const response = await fetch(`${API_URL}/bookings/available?date=${date}`);
+        const response = await fetchWithRetry(`${API_URL}/bookings/available?date=${date}`);
         const result = await response.json();
 
         if (!result.success || result.data.length === 0) {
@@ -93,7 +94,7 @@ async function fetchAvailableSlots(date) {
         showToast('Available slots loaded!', 'success');
     } catch (error) {
         slotsGrid.innerHTML = '';
-        showToast('Error loading slots. Please try again.', 'error');
+        showToast(error.message || 'Error loading slots. Please try again.', 'error');
         console.error('Error:', error);
     }
 }
