@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     addValidation('customer-phone', validatePhone, 'Please enter a valid phone number (min 10 digits)');
 });
 
-// API base URL
-const API_URL = 'http://localhost:3000/api';
+const API_URL = window.location.hostname === 'localhost' ?
+    'http://localhost:3000/api' :
+    '/api';
 
 // Get today's date in YYYY-MM-DD format
 function getTodayDate() {
@@ -213,7 +214,8 @@ async function submitBooking(formData) {
     submitButton.innerHTML = '<span>Processing...</span> ⏳';
 
     try {
-        const response = await fetch(`${API_URL}/bookings`, {
+        // Use /create endpoint for Vercel
+        const response = await fetch(`${API_URL}/bookings/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +226,6 @@ async function submitBooking(formData) {
         const result = await response.json();
 
         if (result.success) {
-            // Show success with animation
             showToast('Booking confirmed! 🎉', 'success');
             document.getElementById('booking-form-section').style.display = 'none';
             document.getElementById('slots-section').style.display = 'none';

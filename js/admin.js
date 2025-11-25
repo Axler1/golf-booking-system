@@ -1,5 +1,7 @@
 // API base URL
-const API_URL = 'http://localhost:3000/api';
+const API_URL = window.location.hostname === 'localhost' ?
+    'http://localhost:3000/api' :
+    '/api';
 
 // Admin password (in production, this should be server-side)
 const ADMIN_PASSWORD = 'admin123';
@@ -176,7 +178,8 @@ function updateStats() {
 // Update booking status
 async function updateBookingStatus(id, status) {
     try {
-        const response = await fetch(`${API_URL}/bookings/${id}`, {
+        // Use /status endpoint for Vercel
+        const response = await fetch(`${API_URL}/bookings/${id}/status`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -190,7 +193,7 @@ async function updateBookingStatus(id, status) {
 
         if (result.success) {
             alert(`Booking marked as ${status}!`);
-            loadBookings(); // Reload bookings
+            loadBookings();
         } else {
             alert('Error updating booking: ' + result.error);
         }
