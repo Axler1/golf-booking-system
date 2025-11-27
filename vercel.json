@@ -1,33 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/bookings/available",
-      "dest": "/api/bookings/available.js"
-    },
-    {
-      "src": "/api/bookings/create",
-      "dest": "/api/bookings/create.js"
-    },
-    {
-      "src": "/api/bookings/([^/]+)/status",
-      "dest": "/api/bookings/[id]/status.js"
-    },
-    {
-      "src": "/api/bookings/([^/]+)",
-      "dest": "/api/bookings/[id].js"
-    },
-    {
-      "src": "/api/bookings",
-      "dest": "/api/bookings/index.js"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
